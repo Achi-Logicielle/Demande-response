@@ -1,0 +1,74 @@
+# Device Registry Backend
+
+This is a backend service for managing devices, event logs, sensor data, smart meters, batteries, forecasts, grid transactions, control commands, and users in a microgrid or SCADA-like environment. It is built with Fastify, TypeScript, and MongoDB (via Mongoose).
+
+## Features
+
+- Device CRUD operations
+- Event log management and seeding
+- JWT-based authentication
+- Modular Fastify routing
+- MongoDB integration via Mongoose
+- Models for batteries, sensors, smart meters, forecasts, grid transactions, control commands, and users
+
+## Project Structure
+
+```
+app/
+  main.ts                # Fastify server entry point
+  seed.ts                # Seed script for event logs
+  handlers/              # Request handlers
+  models/                # Mongoose models
+  routers/               # Fastify route definitions
+  services/              # Business logic/services
+.env                     # Environment variables
+package.json             # NPM scripts and dependencies
+tsconfig.json            # TypeScript configuration
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16+ recommended)
+- MongoDB instance (local or Atlas)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+
+   ```sh
+   npm install
+   ```
+
+3. Configure your `.env` file:
+
+   ```
+   MONGO_URI="your_mongodb_connection_string"
+   JWT_SECRET="your_jwt_secret"
+   ```
+
+### Running the Server
+
+```sh
+npm run dev
+```
+
+The server will start on `http://localhost:3002` by default.
+
+### Seeding Event Logs
+
+To seed the database with sample event logs:
+
+```sh
+npx ts-node app/seed.ts
+```
+
+## API Endpoints
+
+- `GET /devices` - List all devices
+- `GET /devices/:id` - Get device by ID
+- `POST /devices` - Add a new device
+- `PUT /devices/:id` - Update a device
+- `DELETE /devices/:id` - Delete a device
