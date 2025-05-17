@@ -4,6 +4,7 @@ import indexRoutes from './routers/index.route';
 import connectDB from './models/db';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCors from '@fastify/cors';
+import { mqttService } from './services/mqtt.service';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -57,19 +58,22 @@ app.register(indexRoutes, { prefix: '/' });
 const start = async () => {
   try {
     // Database connection
-    await connectDB(); // Make sure connectDB returns a Promise
+    await connectDB();
     
-    // CORS setup (consider restricting origin in production)
+    // Initialize MQTT service
+    mqttService; // This will create the singleton instance
+    
+    // CORS setup
     await app.register(fastifyCors, {
       origin: process.env.NODE_ENV === 'development' ? '*' : process.env.ALLOWED_ORIGINS?.split(',') || [],
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-      credentials: true // If you need to send cookies/auth headers
+      credentials: true
     });
 
     // Server startup
     await app.listen({
-      port: Number(process.env.PORT) || 3001,
-      host: process.env.HOST || '0.0.0.0' // Important for Docker/containerization
+      port: Number(process.env.PORT) || 3002,
+      host: process.env.HOST || '0.0.0.0'
     });
 
     const address = app.server.address();
