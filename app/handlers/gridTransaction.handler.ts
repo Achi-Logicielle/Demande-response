@@ -75,6 +75,7 @@ export async function getGridStatusHandler(
 ) {
   try {
     const result = await gridTransactionService.getGridStatus();
+    console.log("here")
     reply.status(200).send(result);
   } catch (error) {
     reply.status(500).send({ success: false, error: (error as Error).message });

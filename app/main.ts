@@ -38,7 +38,7 @@ app.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply
 // Add this after your JWT setup but before route registration
 app.addHook('onRequest', async (request, reply) => {
   // Skip authentication for certain routes (optional)
-  const publicRoutes = ['/public', '/login', '/health'];
+  const publicRoutes = ['/public', '/login', '/health', '/grid/buy', '/grid/sell', '/grid/status', '/grid/transaction/status'];
   if (publicRoutes.includes(request.url)) {
     return;
   }
@@ -68,7 +68,7 @@ const start = async () => {
 
     // Server startup
     await app.listen({
-      port: Number(process.env.PORT) || 3002,
+      port: Number(process.env.PORT) || 3001,
       host: process.env.HOST || '0.0.0.0' // Important for Docker/containerization
     });
 
